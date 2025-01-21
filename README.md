@@ -8,4 +8,4 @@
 <a href="https://fidelis09.github.io/html-css/Exercicios/ex002/index.html">Executar o Exercicio 002</a>
 
 
-obrigado...
+obrigado..
