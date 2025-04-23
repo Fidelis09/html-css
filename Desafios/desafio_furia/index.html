@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat FURIA Fan</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="chat-container">
+    <div class="header">🤖 Chat Fã da FURIA</div>
+    <div class="messages" id="messages"></div>
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Pergunte algo como 'curiosidade'..." />
+      <button onclick="handleMessage()">Enviar</button>
+    </div>
+  </div>
+
+  <script>
+    const messagesDiv = document.getElementById("messages");
+
+    const respostas = {
+      "próximo jogo": "🔥 O próximo jogo da FURIA é dia 25/04 às 20h contra a NAVI. Tá preparado?",
+      "top fragger": "🎯 KSCERATO foi o top fragger no último jogo com 27 eliminações!",
+      "ranking": "📊 Atualmente, a FURIA está no top 10 do ranking mundial de CS2.",
+      "curiosidade": "🐾 Curiosidade: A FURIA foi o primeiro time BR a ter uma gaming house nos EUA!",
+      "jogadores": "👥 O elenco atual inclui KSCERATO, yuurih, chelo, FalleN e arT.",
+    };
+
+    function addMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.classList.add("message", sender);
+      msg.innerText = text;
+      messagesDiv.appendChild(msg);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function handleMessage() {
+      const input = document.getElementById("userInput");
+      const text = input.value.trim();
+      if (!text) return;
+
+      addMessage(text, "user");
+      input.value = "";
+
+      setTimeout(() => {
+        const lower = text.toLowerCase();
+        let resposta = "🤔 Não entendi. Tente algo como: 'próximo jogo', 'curiosidade', 'ranking', 'jogadores'...";
+        for (const chave in respostas) {
+          if (lower.includes(chave)) {
+            resposta = respostas[chave];
+            break;
+          }
+        }
+        addMessage(resposta, "bot");
+      }, 800); // simula "digitando"
+    }
+  </script>
+</body>
+</html>
