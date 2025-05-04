@@ -18,43 +18,75 @@
 
   <script>
     const messagesDiv = document.getElementById("messages");
-
+  
     const respostas = {
-      "próximo jogo": "🔥 O próximo jogo da FURIA é dia 25/04 às 20h contra a NAVI. Tá preparado?",
-      "top fragger": "🎯 KSCERATO foi o top fragger no último jogo com 27 eliminações!",
-      "ranking": "📊 Atualmente, a FURIA está no top 10 do ranking mundial de CS2.",
-      "curiosidade": "🐾 Curiosidade: A FURIA foi o primeiro time BR a ter uma gaming house nos EUA!",
-      "jogadores": "👥 O elenco atual inclui KSCERATO, yuurih, chelo, FalleN e arT.",
-    };
+  "top fragger": "🎯 KSCERATO foi o top fragger no último jogo com 27 eliminações!",
+  "ranking": "📊 Atualmente, a FURIA está no top 10 do ranking mundial de CS2.",
+  "curiosidade": "🐾 Curiosidade: A FURIA foi o primeiro time BR a ter uma gaming house nos EUA!",
+  "jogadores": "👥 O elenco atual inclui KSCERATO, yuurih, chelo, FalleN e arT.",
+  "história": "📖 A FURIA foi fundada em 2017 e rapidamente se tornou referência no cenário de CS:GO!",
+  "redes sociais": "📱 Siga a FURIA no Twitter, Instagram e YouTube para ficar por dentro de tudo!",
+  "treinador": "🧠 O treinador atual da FURIA é guerri, peça-chave na estratégia do time.",
+  "titulos": "🏆 A FURIA já conquistou torneios importantes como ESL Pro League e DreamHack Open!",
+  "cs2": "🕹️ Desde a chegada do CS2, a FURIA vem se adaptando bem e mostrando evolução!",
+  "furiosos": "💥 Os 'Furiosos' são os fãs mais apaixonados da FURIA. Seja um deles!",
+  "fallen": "🎯 FalleN é o IGL e uma lenda do CS brasileiro. Agora defende a FURIA com garra!",
+  "chelo": "⚡ chelo traz agressividade e clutchs insanos pro time da FURIA!",
+  "kscerato": "🔥 KSCERATO é considerado um dos melhores riflers do mundo!",
+  "yuurih": "🎮 yuurih é conhecido pela sua consistência e inteligência tática!",
+  "art": "🚀 arT é o capitão original e mestre das estratégias ousadas!",
+  "projetos sociais": "❤️ A FURIA também apoia projetos sociais, promovendo inclusão e educação pelo esporte.",
+  "loja": "🛍️ Quer produtos oficiais? Acesse a loja da FURIA em loja.furia.gg.",
+  "mascote": "🐆 A pantera representa a FURIA: ágil, feroz e sempre à espreita da vitória!",
+  "onde assistir": "📺 Você pode acompanhar os jogos da FURIA ao vivo na Twitch e no YouTube oficial!",
+  "próximo jogo": "🔥 O próximo jogo da FURIA é dia 25/04 às 20h contra a NAVI. Tá preparado?",
+  "comandos": "🔍 Aqui estão os comandos que você pode usar:\n- 'próximo jogo'\n- 'top fragger'\n- 'ranking'\n- 'curiosidade'\n- 'jogadores'\n- 'história'\n- 'redes sociais'\n- 'treinador'\n- 'titulos'\n- 'cs2'\n- 'furiosos'\n- 'fallen'\n- 'chelo'\n- 'kscerato'\n- 'yuurih'\n- 'art'\n- 'projetos sociais'\n- 'loja'\n- 'mascote'\n- 'onde assistir'",
+};
 
-    function addMessage(text, sender) {
-      const msg = document.createElement("div");
-      msg.classList.add("message", sender);
-      msg.innerText = text;
-      messagesDiv.appendChild(msg);
-      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+function addMessage(text, sender) {
+  const msg = document.createElement("div");
+  msg.classList.add("message", sender);
+  msg.innerText = text;
+  messagesDiv.appendChild(msg);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function handleMessage() {
+  const input = document.getElementById("userInput");
+  const text = input.value.trim();
+  if (!text) return;
+
+  addMessage(text, "user");
+  input.value = "";
+
+  setTimeout(() => {
+    const normalizar = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    const textoNormalizado = normalizar(text);
+
+    let resposta = "🤔 Não entendi. Tente algo como: 'próximo jogo', 'curiosidade', 'ranking', 'jogadores'...";
+    for (const chave in respostas) {
+      if (textoNormalizado.includes(normalizar(chave))) {
+        resposta = respostas[chave];
+        break;
+      }
     }
+    addMessage(resposta, "bot");
+  }, 800);
+}
 
-    function handleMessage() {
-      const input = document.getElementById("userInput");
-      const text = input.value.trim();
-      if (!text) return;
+// Mensagem automática ao abrir o chat
+window.onload = () => {
+  addMessage("👋 Bem-vindo ao Chat Fã da FURIA! Pergunte algo como 'próximo jogo', 'ranking', 'curiosidade', ou digite 'comandos' para ver todas as opções.", "bot");
 
-      addMessage(text, "user");
-      input.value = "";
-
-      setTimeout(() => {
-        const lower = text.toLowerCase();
-        let resposta = "🤔 Não entendi. Tente algo como: 'próximo jogo', 'curiosidade', 'ranking', 'jogadores'...";
-        for (const chave in respostas) {
-          if (lower.includes(chave)) {
-            resposta = respostas[chave];
-            break;
-          }
-        }
-        addMessage(resposta, "bot");
-      }, 800); // simula "digitando"
+  // Atalho: enviar com Enter
+  document.getElementById("userInput").addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      handleMessage();
     }
+  });
+};
+
   </script>
+  
 </body>
 </html>
